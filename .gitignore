@@ -1,3 +1,6 @@
 secret_bing_translate.csv
 secret_bing_search.csv
 secret/*
+.DS_Store
+.ipynb_checkpoints/
+.python-version
