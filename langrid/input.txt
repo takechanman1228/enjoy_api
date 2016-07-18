@@ -1,0 +1,95 @@
+SOAP (Simple Object Access Protocol) is a protocol specification for exchanging structured information in the implementation of web services in computer networks. It uses XML Information Set for its message format, and relies on application layer protocols, most often Hypertext Transfer Protocol (HTTP) or Simple Mail Transfer Protocol (SMTP), for message negotiation and transmission.
+
+
+== Characteristics ==
+SOAP provides the Messaging Protocol layer of a web services protocol stack for web services. It is XML-based protocol consisting of three parts:
+an envelope, which defines the message structure and how to process it
+a set of encoding rules for expressing instances of application-defined datatypes
+a convention for representing procedure calls and responses
+SOAP has three major characteristics:
+extensibility (security and WS-routing are among the extensions under development)
+neutrality (SOAP can operate over any transport protocol such as HTTP, SMTP, TCP, UDP, or JMS)
+independence (SOAP allows for any programming model)
+As an example of what SOAP procedures can do, an application can send a SOAP request to a server that has web services enabled—such as a real-estate price database—with the parameters for a search. The server then returns a SOAP response (an XML-formatted document with the resulting data), e.g., prices, location, features. Since the generated data comes in a standardized machine-parsable format, the requesting application can then integrate it directly.
+The SOAP architecture consists of several layers of specifications for:
+message format
+Message Exchange Patterns (MEP)
+underlying transport protocol bindings
+message processing models
+protocol extensibility
+SOAP evolved as a successor of XML-RPC, though it borrows its transport and interaction neutrality and the envelope/header/body from elsewhere (probably from WDDX).
+
+
+== History ==
+SOAP was designed as an object-access protocol in 1998 by Dave Winer, Don Box, Bob Atkinson, and Mohsen Al-Ghosein for Microsoft, where Atkinson and Al-Ghosein were working. Due to politics within Microsoft, the specification was not made available until it was submitted to IETF 13 September 1999. Because of Microsoft's hesitation, Dave Winer shipped XML-RPC in 1998.
+The submitted Internet Draft did not reach RFC status and is therefore not considered a "standard" as such. Version 1.1 of the specification was published as a W3C Note on 8 May 2000. Since version 1.1 did not reach W3C Recommendation status, it can not be considered a "standard" either. Version 1.2 of the specification, however, became a W3C recommendation on June 24, 2003.
+The SOAP specification was maintained by the XML Protocol Working Group of the World Wide Web Consortium until the group was closed 10 July 2009. SOAP originally stood for "Simple Object Access Protocol" but version 1.2 of the standard dropped this acronym.
+After SOAP was first introduced, it became the underlying layer of a more complex set of Web Services, based on Web Services Description Language (WSDL), XML Schema and Universal Description Discovery and Integration (UDDI). These different services, especially UDDI, have proved to be of far less interest, but an appreciation of them gives a more complete understanding of the expected role of SOAP compared to how web services have actually evolved.
+
+
+== Specification ==
+
+The SOAP specification defines the messaging framework, which consists of:
+The SOAP processing model defining the rules for processing a SOAP message
+The SOAP extensibility model defining the concepts of SOAP features and SOAP modules
+The SOAP underlying protocol binding framework describing the rules for defining a binding to an underlying protocol that can be used for exchanging SOAP messages between SOAP nodes
+The SOAP message construct defining the structure of a SOAP message
+
+
+=== Processing model ===
+The SOAP processing model describes a distributed processing model, its participants, the SOAP nodes, and how a SOAP receiver processes a SOAP message. The following SOAP nodes are defined:
+SOAP sender –  a SOAP node that transmits a SOAP message
+SOAP receiver –  a SOAP node that accepts a SOAP message
+SOAP message path –  the set of SOAP nodes through which a single SOAP message passes
+Initial SOAP sender (Originator) –  the SOAP sender that originates a SOAP message at the starting point of a SOAP message path
+SOAP intermediary –  a SOAP intermediary is both a SOAP receiver and a SOAP sender and is targetable from within a SOAP message. It processes the SOAP header blocks targeted at it and acts to forward a SOAP message towards an ultimate SOAP receiver.
+Ultimate SOAP receiver –  the SOAP receiver that is a final destination of a SOAP message. It is responsible for processing the contents of the SOAP body and any SOAP header blocks targeted at it. In some circumstances, a SOAP message might not reach an ultimate SOAP receiver, for example because of a problem at a SOAP intermediary. An ultimate SOAP receiver cannot also be a SOAP intermediary for the same SOAP message.
+
+
+== SOAP Building Blocks ==
+A SOAP message is an ordinary XML document containing the following elements:
+
+
+== Transport methods ==
+Both SMTP and HTTP are valid application layer protocols used as transport for SOAP, but HTTP has gained wider acceptance as it works well with today's internet infrastructure; specifically, HTTP works well with network firewalls. SOAP may also be used over HTTPS (which is the same protocol as HTTP at the application level, but uses an encrypted transport protocol underneath) with either simple or mutual authentication; this is the advocated WS-I method to provide web service security as stated in the WS-I Basic Profile 1.1.
+This is a major advantage over other distributed protocols like GIOP/IIOP or DCOM, which are normally filtered by firewalls. SOAP over AMQP is yet another possibility that some implementations support. SOAP also has an advantage over DCOM that it is unaffected by security rights configured on the machines that require knowledge of both transmitting and receiving nodes. This lets SOAP be loosely coupled in a way that is not possible with DCOM. There is also the SOAP-over-UDP OASIS standard.
+
+
+== Message format ==
+XML Information Set was chosen as the standard message format because of its widespread use by major corporations and open source development efforts. Typically, XML Information Set is serialized as XML. A wide variety of freely available tools significantly eases the transition to a SOAP-based implementation. The somewhat lengthy syntax of XML can be both a benefit and a drawback. While it promotes readability for humans, facilitates error detection, and avoids interoperability problems such as byte-order (endianness), it can slow processing speed and can be cumbersome. For example, CORBA, GIOP, ICE, and DCOM use much shorter, binary message formats. On the other hand, hardware appliances are available to accelerate processing of XML messages. Binary XML is also being explored as a means for streamlining the throughput requirements of XML. XML messages by their self-documenting nature usually have more 'overhead' (Headers, footers, nested tags, delimiters) than actual data in contrast to earlier protocols where the overhead was usually a relatively small percentage of the overall message.
+In financial messaging SOAP was found to result in a 2–4 times larger message than previous protocols FIX (Financial Information Exchange) and CDR (Common Data Representation).
+XML Information Set does not have to be serialized in XML. For instance, a CSV or JSON XML-infoset representation exists. There is also no need to specify a generic transformation framework. The concept of SOAP bindings allows for specific bindings for a specific application. The drawback is that both the senders and receivers have to support this newly defined binding.
+
+
+== Example message ==
+
+
+== Technical critique ==
+
+
+=== Advantages ===
+SOAP's neutrality characteristic explicitly makes it suitable for use with any transport protocol. Implementations often use HTTP as a transport protocol, but obviously other popular transport protocols can be used. For example, SOAP can also be used over SMTP, JMS and Message Queues.
+SOAP, when combined with HTTP post/response exchanges, tunnels easily through existing firewalls and proxies, and consequently doesn't require modifying the widespread computing and communication infrastructures that exist for processing HTTP post/response exchanges.
+
+
+=== Disadvantages ===
+When using standard implementations and the default SOAP/HTTP binding, the XML infoset is serialized as XML. To improve performance for the special case of XML with embedded binary objects, the Message Transmission Optimization Mechanism was introduced.
+When relying on HTTP as a transport protocol and not using WS-Addressing or an ESB, the roles of the interacting parties are fixed. Only one party (the client) can use the services of the other.
+The verbosity of the protocol led to the domination in the field by services using the HTTP protocol more directly.
+
+
+== See also ==
+
+
+== References ==
+
+
+== Further reading ==
+Benoît Marchal, "Soapbox: Why I'm using SOAP", IBM
+Uche Ogbuji, "Tutorial: XML messaging with SOAP", Principal Consultant, Fourthought, Inc.
+
+
+== External links ==
+W3C SOAP page
+SOAP Version 1.2 specification
+Create SOAP Message in Java
